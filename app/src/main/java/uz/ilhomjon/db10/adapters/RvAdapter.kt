@@ -1,0 +1,36 @@
+package uz.ilhomjon.db10.adapters
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.recyclerview.widget.RecyclerView
+import uz.ilhomjon.db10.databinding.ItemRvBinding
+import uz.ilhomjon.db10.models.MyContact
+
+class RvAdapter(val list: List<MyContact>, val rvAction: RvAction) : RecyclerView.Adapter<RvAdapter.Vh>() {
+
+    inner class Vh(var itemRvBinding: ItemRvBinding) : RecyclerView.ViewHolder(itemRvBinding.root) {
+
+        fun onBind(myContact: MyContact, position: Int) {
+            itemRvBinding.tvName.text = myContact.name
+            itemRvBinding.tvNumber.text = myContact.number
+            itemRvBinding.root.setOnClickListener {
+                rvAction.menuClicked(myContact, position, itemRvBinding.imageMenu)
+            }
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Vh {
+        return Vh(ItemRvBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    }
+
+    override fun onBindViewHolder(holder: Vh, position: Int) {
+        holder.onBind(list[position], position)
+    }
+
+    override fun getItemCount(): Int = list.size
+}
+
+interface RvAction{
+    fun menuClicked(myContact: MyContact, position: Int, imageView: ImageView)
+}
