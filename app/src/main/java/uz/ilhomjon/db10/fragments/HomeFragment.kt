@@ -24,7 +24,7 @@ class HomeFragment : Fragment(), RvAction {
         savedInstanceState: Bundle?,
     ): View? {
         setHasOptionsMenu(true)
-
+// Ozodbek
         myDbHelper = MyDbHelper(binding.root.context)
         rvAdapter = RvAdapter(myDbHelper.getAllContacts() as ArrayList, this)
         binding.rv.adapter = rvAdapter
