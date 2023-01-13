@@ -2,12 +2,13 @@ package uz.ilhomjon.db10.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import uz.ilhomjon.db10.databinding.ItemRvBinding
 import uz.ilhomjon.db10.models.MyContact
 
-class RvAdapter(val list: List<MyContact>, val rvAction: RvAction) : RecyclerView.Adapter<RvAdapter.Vh>() {
+class RvAdapter(val list: ArrayList<MyContact>, val rvAction: RvAction) : RecyclerView.Adapter<RvAdapter.Vh>() {
 
     inner class Vh(var itemRvBinding: ItemRvBinding) : RecyclerView.ViewHolder(itemRvBinding.root) {
 

@@ -44,4 +44,20 @@ class MyDbHelper(val context: Context) : SQLiteOpenHelper(context, "MyDbContacts
         }
         return list
     }
+
+    override fun deleteContact(myContact: MyContact) {
+        val database = this.writableDatabase
+        database.delete("MyContacts", "id=?", arrayOf(myContact.id.toString()))
+        database.close()
+    }
+
+    override fun editContact(myContact: MyContact): Int {
+        val database = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put("id", myContact.id)
+        contentValues.put("name", myContact.name)
+        contentValues.put("number", myContact.number)
+
+        return database.update("MyContacts", contentValues, "id=?", arrayOf(myContact.id.toString()))
+    }
 }

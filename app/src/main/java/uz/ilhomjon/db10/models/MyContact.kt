@@ -1,6 +1,8 @@
 package uz.ilhomjon.db10.models
 
-class MyContact {
+import java.io.Serializable
+
+class MyContact : Serializable {
     var id:Int? = null
     var name:String? = null
     var number:String? = null

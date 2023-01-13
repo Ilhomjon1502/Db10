@@ -5,6 +5,7 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import uz.ilhomjon.db10.R
@@ -25,7 +26,7 @@ class HomeFragment : Fragment(), RvAction {
         setHasOptionsMenu(true)
 
         myDbHelper = MyDbHelper(binding.root.context)
-        rvAdapter = RvAdapter(myDbHelper.getAllContacts(), this)
+        rvAdapter = RvAdapter(myDbHelper.getAllContacts() as ArrayList, this)
         binding.rv.adapter = rvAdapter
 
         return binding.root
@@ -37,7 +38,7 @@ class HomeFragment : Fragment(), RvAction {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        findNavController().navigate(R.id.addEditFragment)
+        findNavController().navigate(R.id.addEditFragment, bundleOf("isEdit" to false))
         return super.onOptionsItemSelected(item)
     }
 
@@ -49,9 +50,13 @@ class HomeFragment : Fragment(), RvAction {
             when(it.itemId){
                 R.id.menu_delete->{
                     Toast.makeText(context, "O'chiramiz", Toast.LENGTH_SHORT).show()
+                    myDbHelper.deleteContact(myContact)
+                    rvAdapter.list.remove(myContact)
+                    rvAdapter.notifyItemRemoved(position)
                 }
                 R.id.menu_edit->{
                     Toast.makeText(context, "Menu edit", Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.addEditFragment, bundleOf("isEdit" to true, "keyMyContact" to myContact))
                 }
             }
             true
